@@ -34,4 +34,11 @@ export const Container = styled.div`
   ul {
     margin-top: 30px;
   }
+
+  .drop-area {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    width: 100%;
+  }
 `;

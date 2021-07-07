@@ -6,21 +6,25 @@ import { useDrop } from 'react-dnd'
 import BorderContext from '../Board/context'
 
 const List = ({ data, index: listIndex }) => {
-  const { move } = useContext(BorderContext)
+  const { move, lists } = useContext(BorderContext)
 
   const [, dropRef] = useDrop({
     accept: 'CARD',
     hover (item) {
-      if (!data.cards[0]) {
-        move(item.index, 0, item.listIndex, listIndex)
-        item.index = 0
+
+      if (item.listIndex !== listIndex) {
+        const newIndex = lists[listIndex].cards.length
+        console.log(item.index, newIndex, item.listIndex, listIndex)
+
+        move(item.index, newIndex, item.listIndex, listIndex)
+        item.index = newIndex
         item.listIndex = listIndex
-      }
     }
+      }
   })
 
   return (
-    <Container done={data.done} ref={dropRef}>
+    <Container done={data.done}>
       <header>
         <h2>{data.title}</h2>
         {data.creatable && (
@@ -34,6 +38,7 @@ const List = ({ data, index: listIndex }) => {
           <Card key={card.id} listIndex={listIndex} index={index} data={card} />
         ))}
       </ul>
+      <span className="drop-area" ref={dropRef}/>
     </Container>
   )
 }

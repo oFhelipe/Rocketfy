@@ -11,9 +11,10 @@ const Board = () => {
 
   function move (from, to, fromList, toList) {
     setLists(
-      produce(lists, draft => {
+      produce(lists,draft => {
+        
         const dragged = draft[fromList].cards[from]
-
+        
         draft[fromList].cards.splice(from, 1)
         draft[toList].cards.splice(to, 0, dragged)
       })
